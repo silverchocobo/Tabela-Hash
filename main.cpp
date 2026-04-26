@@ -1,39 +1,103 @@
+#include <iostream>
+#include <string>
 #include "Sensor.h"
 #include "Tabela.h"
 
-int main(){
+using namespace std;
 
+void exibirMenu() {
+    cout << "\n=-=-=-=-=-= SISTEMA DE MONITORAMENTO AGRICOLA =-=-=-=-=-=" << endl;
+    cout << "1) Cadastrar sensor" << endl;
+    cout << "2) Atualizar leitura" << endl;
+    cout << "3) Buscar sensor" << endl;
+    cout << "4) Remover sensor TODO" << endl;
+    cout << "5) Exibir sensores" << endl;
+    cout << "6) Teste de desempenho TODO" << endl;
+    cout << "0) Sair do sistema" << endl;
+    cout << "Escolha uma opcao: ";
+}
+
+int main() {
     Tabela tabela;
+    int opcao;
 
-    // 1. Inserções normais (Sem colisão)
-    Sensor s1(15, "Temperatura", "Sala 1");   // Vai para Pos 5
-    Sensor s2(23, "Umidade", "Estufa");       // Vai para Pos 3
-    tabela.cadastarSensor(s1);
-    tabela.cadastarSensor(s2);
+    do {
+        exibirMenu();
 
-    // 2. Primeira Colisão (ID 35 bate no 15)
-    Sensor s3(35, "Pressao", "Laboratorio");  // Vai para Pos 7
-    tabela.cadastarSensor(s3);
+        if (!(cin >> opcao)) {
+            cin.clear();
+            cin.ignore('\n');
+            opcao = -1;
+        }
 
-    // 3. Colisões em Cadeia (ID 45 e 5 batem no 15, 35 e entre si)
-    Sensor s4(45, "Luz", "Jardim");           // Vai para Pos 9
-    Sensor s5(5,  "Movimento", "Corredor");   // Vai para Pos 1
-    tabela.cadastarSensor(s4);
-    tabela.cadastarSensor(s5);
+        switch(opcao) {
+            case 1: {
+                int id;
+                string tipo, localizacao;
+                cout << "Digite o ID do sensor (numero inteiro): ";
+                cin >> id;
+                
+                cout << "Digite o Tipo do sensor: ";
+                cin >> ws; 
+                getline(cin, tipo);
+                
+                cout << "Digite a Localizacao do sensor: ";
+                getline(cin, localizacao);
+                
+                Sensor novoSensor(id, tipo, localizacao);
+                tabela.cadastarSensor(novoSensor);
+                cout << "Sensor cadastrado com sucesso!" << endl;
+                break;
+            }
+            case 2: {
+                int idBusca;
+                float novaLeitura;
+                cout << "Digite o ID do sensor: ";
+                cin >> idBusca;
+                cout << "Digite o valor da nova leitura: ";
+                cin >> novaLeitura;
+                
+                if (tabela.atualizarLeitura(idBusca, novaLeitura)) {
+                    cout << "Leitura atualizada com sucesso!" << endl;
+                } else {
+                    cout << "Sensor com ID " << idBusca << " nao encontrado." << endl;
+                }
+                break;
+            }
+            case 3: {
+                int idBusca;
+                cout << "\n-- Buscar Sensor --" << endl;
+                cout << "Digite o ID do sensor: ";
+                cin >> idBusca;
+                
+                std::optional<Sensor> encontrado = tabela.getSensor(idBusca);
+                if (encontrado) {
+                    cout << "Sensor encontrado!" << endl;
+                    cout << "Tipo: " << encontrado->getTipo() << " | Local: " << encontrado->getLocalizacao() << " | Ultima Leitura: " << encontrado->getUltimaLeitura() << endl;
+                } else {
+                    cout << "Sensor com ID " << idBusca << " nao encontrado." << endl;
+                }
+                break;
+            }
+            case 4:
+                // TODO remocao
+                cout << "\nTODO" << endl;
+                break;
+            case 5:
+                cout << "\n-- Lista de Sensores --" << endl;
+                tabela.exibirSensores();
+                break;
+            case 6:
+                // TODO aquele teste de desempenho de 1000 sensores q o prof pede
+                cout << "\nTODO" << endl;
+                break;
+            case 0:
+                cout << "\nSaindo do sistema" << endl;
+                break;
+            default:
+                cout << "\nOpcao invalida." << endl;
+        }
+    } while (opcao != 0);
 
-    // 4. Mais inserções e nova colisão
-    Sensor s6(10, "Fumaca", "Cozinha");       // Vai para Pos 0
-    Sensor s7(20, "Gas", "Porão");            // Vai para Pos 4 (Colide com 10)
-    tabela.cadastarSensor(s6);
-    tabela.cadastarSensor(s7);
-
-    // 5. Preenchendo os ultimos espaços vazios
-    Sensor s8(12, "Agua", "Caixa D'Agua");    // Vai para Pos 2
-    Sensor s9(18, "Vento", "Telhado");        // Vai para Pos 8
-    Sensor s10(16, "Ruido", "Rua");           // Vai para Pos 6
-    tabela.cadastarSensor(s8);
-    tabela.cadastarSensor(s9);
-    tabela.cadastarSensor(s10);
-
-    tabela.exibirSensores();
+    return 0;
 }

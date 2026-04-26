@@ -38,3 +38,39 @@ void Tabela::exibirSensores() {
     }
 }
 
+std::optional<Sensor> Tabela::getSensor(int id) {
+    int h1 = id % tamanho;
+    int h2 = 7 - (id % 7);
+    int h;
+    int i = 0;
+
+    while(i < tamanho) {
+        h = (h1 + i * h2) % tamanho;
+        if (!sensores[h]) {
+            return std::nullopt;
+        } else if (sensores[h]->getId() == id) {
+            return sensores[h];
+        }
+        i++;
+    }
+    return std::nullopt;
+}
+
+bool Tabela::atualizarLeitura(int id, float valor) {
+    int h1 = id % tamanho;
+    int h2 = 7 - (id % 7);
+    int h;
+    int i = 0;
+
+    while(i < tamanho) {
+        h = (h1 + i * h2) % tamanho;
+        if (!sensores[h]) {
+            return false;
+        } else if (sensores[h]->getId() == id) {
+            sensores[h]->setUltimaLeitura(valor); 
+            return true;
+        }
+        i++;
+    }
+    return false;
+}

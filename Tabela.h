@@ -13,8 +13,8 @@ class Tabela{
     public:
         Tabela();
         void cadastarSensor(Sensor sensor);
-        void atualizarLeitura(int id);
-        Sensor getSensor(int id);
+        bool atualizarLeitura(int id, float valor);
+        std::optional<Sensor> getSensor(int id);
         void removerSensor(int id);
         void exibirSensores();
 };
