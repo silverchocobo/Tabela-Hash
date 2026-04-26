@@ -8,7 +8,7 @@
 
 class Tabela{
     private:
-        std::array<std::optional<Sensor>, 100> sensores;
+        std::array<std::optional<Sensor>, 10> sensores;
         int tamanho;
     public:
         Tabela();

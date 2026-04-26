@@ -9,7 +9,7 @@ Tabela::Tabela() {
 void Tabela::cadastarSensor(Sensor sensor) {
     int idSensor = sensor.getId();
     int h1 = idSensor % tamanho;
-    int h2 = 97 - (idSensor % 97);
+    int h2 = 7 - (idSensor % 7);
     int h;
     int i = 0;
 
@@ -24,14 +24,16 @@ void Tabela::cadastarSensor(Sensor sensor) {
     }   
 }
 
-void Tabela::exibirSensores(){
-    for (const auto& opt_sensor : sensores) {
-        if(opt_sensor.has_value()){
-            Sensor sensor = opt_sensor.value(); 
-            std::cout << "----------------------" << "\n";
+void Tabela::exibirSensores() {
+    for (int i = 0; i < tamanho; i++) {
+        if (sensores[i].has_value()) {
+            Sensor sensor = sensores[i].value();
+            std::cout << "--- [ POSICAO " << i << " ] ---" << "\n";
             std::cout << "Id: " << sensor.getId() << "\n";
             std::cout << "Tipo: " << sensor.getTipo() << "\n";
-            std::cout << "Localização: " << sensor.getLocalizacao() << "\n";
+            std::cout << "Localização: " << sensor.getLocalizacao() << "\n\n";
+        } else {
+            std::cout << "--- [ POSICAO " << i << " ] VAZIA ---\n\n"; 
         }
     }
 }
