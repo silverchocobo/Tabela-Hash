@@ -15,7 +15,7 @@ class Tabela{
         void cadastarSensor(Sensor sensor);
         bool atualizarLeitura(int id, float valor);
         std::optional<Sensor> getSensor(int id);
-        void removerSensor(int id);
+        bool removerSensor(int id);
         void exibirSensores();
 };
 

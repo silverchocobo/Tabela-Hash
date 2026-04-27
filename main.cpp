@@ -10,7 +10,7 @@ void exibirMenu() {
     cout << "1) Cadastrar sensor" << endl;
     cout << "2) Atualizar leitura" << endl;
     cout << "3) Buscar sensor" << endl;
-    cout << "4) Remover sensor TODO" << endl;
+    cout << "4) Remover sensor" << endl;
     cout << "5) Exibir sensores" << endl;
     cout << "6) Teste de desempenho TODO" << endl;
     cout << "0) Sair do sistema" << endl;
@@ -79,10 +79,17 @@ int main() {
                 }
                 break;
             }
-            case 4:
-                // TODO remocao
-                cout << "\nTODO" << endl;
+            case 4: {
+                int idBusca;
+                cout << "Digite o ID do sensor que deseja remover: ";
+                cin >> idBusca;
+                if (tabela.removerSensor(idBusca)) {
+                    cout << "Sensor removido com sucesso!" << endl;
+                } else {
+                    cout << "Sensor com ID " << idBusca << " nao encontrado." << endl;
+                }
                 break;
+            }
             case 5:
                 cout << "\n-- Lista de Sensores --" << endl;
                 tabela.exibirSensores();
