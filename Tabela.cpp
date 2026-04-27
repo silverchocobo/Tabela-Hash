@@ -29,6 +29,10 @@ void Tabela::exibirSensores() {
     for (int i = 0; i < tamanho; i++) {
         if (sensores[i].has_value()) {
             Sensor sensor = sensores[i].value();
+            if (sensor.getId() == -1) {
+                std::cout << "--- [ POSICAO " << i << " ] VAZIA ---\n\n";
+                continue;
+            }
             std::cout << "--- [ POSICAO " << i << " ] ---" << "\n";
             std::cout << "Id: " << sensor.getId() << "\n";
             std::cout << "Tipo: " << sensor.getTipo() << "\n";
