@@ -1,4 +1,3 @@
-#ifndef TABELA_H
 #define TABELA_H
 
 #include <vector>
@@ -8,15 +7,16 @@
 
 class Tabela{
     private:
-        std::array<std::optional<Sensor>, 10> sensores;
+        std::array<std::optional<Sensor>, 1000> sensores;
         int tamanho;
     public:
         Tabela();
-        void cadastarSensor(Sensor sensor);
+        int cadastarSensor(Sensor sensor);
         bool atualizarLeitura(int id, float valor);
         std::optional<Sensor> getSensor(int id);
         void removerSensor(int id);
         void exibirSensores();
+        void testeDesempenho();
 };
 
 //POSSIBILIDADE DE FUNÇÃO HASHING:
@@ -25,5 +25,3 @@ class Tabela{
 //h1(k) = k % m
 
 //h2(k) = primo menor que m - (k % primo menor que m)
-
-#endif

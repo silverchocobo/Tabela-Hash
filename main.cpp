@@ -1,7 +1,9 @@
 #include <iostream>
 #include <string>
+#include <chrono>
 #include "Sensor.h"
 #include "Tabela.h"
+#include <thread>
 
 using namespace std;
 
@@ -12,7 +14,7 @@ void exibirMenu() {
     cout << "3) Buscar sensor" << endl;
     cout << "4) Remover sensor TODO" << endl;
     cout << "5) Exibir sensores" << endl;
-    cout << "6) Teste de desempenho TODO" << endl;
+    cout << "6) Teste de desempenho" << endl;
     cout << "0) Sair do sistema" << endl;
     cout << "Escolha uma opcao: ";
 }
@@ -47,6 +49,7 @@ int main() {
                 Sensor novoSensor(id, tipo, localizacao);
                 tabela.cadastarSensor(novoSensor);
                 cout << "Sensor cadastrado com sucesso!" << endl;
+                std::this_thread::sleep_for(std::chrono::seconds(5));
                 break;
             }
             case 2: {
@@ -59,8 +62,10 @@ int main() {
                 
                 if (tabela.atualizarLeitura(idBusca, novaLeitura)) {
                     cout << "Leitura atualizada com sucesso!" << endl;
+                    std::this_thread::sleep_for(std::chrono::seconds(5));
                 } else {
                     cout << "Sensor com ID " << idBusca << " nao encontrado." << endl;
+                    std::this_thread::sleep_for(std::chrono::seconds(5));
                 }
                 break;
             }
@@ -74,8 +79,10 @@ int main() {
                 if (encontrado) {
                     cout << "Sensor encontrado!" << endl;
                     cout << "Tipo: " << encontrado->getTipo() << " | Local: " << encontrado->getLocalizacao() << " | Ultima Leitura: " << encontrado->getUltimaLeitura() << endl;
+                    std::this_thread::sleep_for(std::chrono::seconds(5));
                 } else {
                     cout << "Sensor com ID " << idBusca << " nao encontrado." << endl;
+                    std::this_thread::sleep_for(std::chrono::seconds(5));
                 }
                 break;
             }
@@ -86,10 +93,11 @@ int main() {
             case 5:
                 cout << "\n-- Lista de Sensores --" << endl;
                 tabela.exibirSensores();
+                std::this_thread::sleep_for(std::chrono::seconds(5));
                 break;
             case 6:
-                // TODO aquele teste de desempenho de 1000 sensores q o prof pede
-                cout << "\nTODO" << endl;
+                tabela.testeDesempenho();
+                std::this_thread::sleep_for(std::chrono::seconds(5));
                 break;
             case 0:
                 cout << "\nSaindo do sistema" << endl;
