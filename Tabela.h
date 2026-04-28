@@ -7,7 +7,7 @@
 
 class Tabela{
     private:
-        std::array<std::optional<Sensor>, 1000> sensores;
+        std::array<std::optional<Sensor>, 11> sensores;
         int tamanho;
     public:
         Tabela();
@@ -17,6 +17,7 @@ class Tabela{
         bool removerSensor(int id);
         void exibirSensores();
         void testeDesempenho();
+        int funcaoHash(int i, int id);
 };
 
 //POSSIBILIDADE DE FUNÇÃO HASHING:

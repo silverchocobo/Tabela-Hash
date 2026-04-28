@@ -9,20 +9,18 @@ Tabela::Tabela() {
 
 int Tabela::cadastarSensor(Sensor sensor) {
     int idSensor = sensor.getId();
-    int h1 = idSensor % tamanho;
-    int h2 = 997 - (idSensor % 997);
-    int h;
     int i = 0;
 
     while(i < tamanho){
-        h = (h1 + i * h2) % tamanho;
-        if (!sensores[h]){
+        int h = funcaoHash(i,idSensor);
+        if (!sensores[h] || sensores[h]->getId() == -1){
             sensores[h] = sensor;
-            break;
+            return i;;
         }
         i++; 
     }
-    return i;
+    return -1;
+    
 }
 
 void Tabela::exibirSensores() {
@@ -44,14 +42,11 @@ void Tabela::exibirSensores() {
 }
 
 std::optional<Sensor> Tabela::getSensor(int id) {
-    int h1 = id % tamanho;
-    int h2 = 997 - (id % 997);
-    int h;
     int i = 0;
     auto inicio = std::chrono::steady_clock::now();
 
     while(i < tamanho) {
-        h = (h1 + i * h2) % tamanho;
+        int h = funcaoHash(i,id);
         if (!sensores[h]) {
             return std::nullopt;
         } else if (sensores[h]->getId() == id) {
@@ -69,13 +64,10 @@ std::optional<Sensor> Tabela::getSensor(int id) {
 }
 
 bool Tabela::atualizarLeitura(int id, float valor) {
-    int h1 = id % tamanho;
-    int h2 = 997 - (id % 997);
-    int h;
     int i = 0;
 
     while(i < tamanho) {
-        h = (h1 + i * h2) % tamanho;
+        int h = funcaoHash(i,id);
         if (!sensores[h]) {
             return false;
         } else if (sensores[h]->getId() == id) {
@@ -95,7 +87,7 @@ void Tabela::testeDesempenho() {
 
     int inseridos = 0;
     int colisoes = 0;
-    for (int i = 1; i <= 1000; i++) {
+    for (int i = 0; i < 11; i++) {
         int id_gerado = rand() % 5000;
         string tipo_gerado = "Tipo_" + to_string(i);
         string local_gerado = "Setor_" + to_string(i);
@@ -112,4 +104,26 @@ void Tabela::testeDesempenho() {
     cout << "\n" << inseridos << " sensores foram gerados e inseridos." << endl;
     cout << "Tempo de execucao da insercao: " << duracao.count() << " microssegundos." << endl;
     std::cout << "Colisoes: " << colisoes <<std::endl;  
+}
+
+bool Tabela::removerSensor(int id) {
+    int i = 0;
+
+    while(i < tamanho) {
+        int h = funcaoHash(i,id);
+        if (!sensores[h]) {
+            return false;
+        } else if (sensores[h]->getId() == id) {
+            sensores[h] = Sensor(-1, "", ""); // tombstone
+            return true;
+        }
+        i++;
+    }
+    return false;
+}
+
+int Tabela::funcaoHash(int i, int id){
+    int h1 = id % tamanho;
+    int h2 = 7 - (id % 7);
+    return (h1 + i * h2) % tamanho;
 }

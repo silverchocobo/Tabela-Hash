@@ -47,9 +47,15 @@ int main() {
                 getline(cin, localizacao);
                 
                 Sensor novoSensor(id, tipo, localizacao);
-                tabela.cadastarSensor(novoSensor);
-                cout << "Sensor cadastrado com sucesso!" << endl;
-                std::this_thread::sleep_for(std::chrono::seconds(5));
+                if(tabela.cadastarSensor(novoSensor) != -1){
+                    cout << "Sensor cadastrado com sucesso!" << endl;
+                    std::this_thread::sleep_for(std::chrono::seconds(3));
+                }
+                else {
+                    cout << "Erro ao cadasstrar sensor: Armazenamento cheio!" << endl;
+                    std::this_thread::sleep_for(std::chrono::seconds(3));
+                }
+                
                 break;
             }
             case 2: {
@@ -92,8 +98,10 @@ int main() {
                 cin >> idBusca;
                 if (tabela.removerSensor(idBusca)) {
                     cout << "Sensor removido com sucesso!" << endl;
+                    std::this_thread::sleep_for(std::chrono::seconds(3));
                 } else {
                     cout << "Sensor com ID " << idBusca << " nao encontrado." << endl;
+                    std::this_thread::sleep_for(std::chrono::seconds(3));
                 }
                 break;
             }
