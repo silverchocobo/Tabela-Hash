@@ -21,8 +21,9 @@ Onde:
 - `k` é o ID do sensor
 - `i` é o número da tentativa
 - `m` é o tamanho da tabela
+- `j` é um número primo pouco menor que m
 - `h1(k) = k % m` é a função hash primária
-- `h2(k) = 7 - (k % 7)` é a função hash secundária
+- `h2(k) = j - (k % j)` é a função hash secundária
 
 A primeira função define a posição inicial. Se houver colisão, a segunda função define o passo de sondagem, que varia conforme a chave. Isso evita o agrupamento primário da sondagem linear e o agrupamento secundário da sondagem quadrática, distribuindo as chaves de forma mais uniforme pela tabela.
 
