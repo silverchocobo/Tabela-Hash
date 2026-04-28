@@ -87,7 +87,7 @@ void Tabela::testeDesempenho() {
 
     int inseridos = 0;
     int colisoes = 0;
-    for (int i = 0; i < 11; i++) {
+    for (int i = 0; i < 1000; i++) {
         int id_gerado = rand() % 5000;
         string tipo_gerado = "Tipo_" + to_string(i);
         string local_gerado = "Setor_" + to_string(i);
@@ -124,6 +124,6 @@ bool Tabela::removerSensor(int id) {
 
 int Tabela::funcaoHash(int i, int id){
     int h1 = id % tamanho;
-    int h2 = 7 - (id % 7);
+    int h2 = 997 - (id % 977);
     return (h1 + i * h2) % tamanho;
 }

@@ -9,7 +9,7 @@ class Sensor{
         int id;
         std::string tipo;
         std::string localizacao;
-        float ultimaLeitura; //acho q é o ultimo valor lido pelo sensor
+        float ultimaLeitura;
     
     public:
         Sensor();
